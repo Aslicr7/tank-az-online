@@ -1,0 +1,6 @@
+{
+  "name": "Tank AZ Online",
+  "description": "2D Top-down multiplayer tank shooter with bouncing bullets, maze maps, AI bots, and LAN/Online multiplayer.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

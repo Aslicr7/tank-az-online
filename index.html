@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Tank AZ Online - Giải trí sau những giờ làm việc căng thẳng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/client/style.css" />
+  </head>
+  <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased overflow-hidden">
+    
+    <!-- 1. LOGIN SCREEN (Strict Login Flow: Shown First, Lobby Hidden) -->
+    <div id="screen-login" class="flex-1 flex flex-col items-center justify-center p-3 sm:p-6 bg-pastel-mesh relative">
+      <!-- Login Form Card with Fluid Natural Two-Column Layout -->
+      <div class="w-11/12 max-w-5xl mx-auto bg-slate-900/90 border border-slate-700/80 p-4 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl backdrop-blur-md relative z-10">
+        <form id="form-login" class="flex flex-col landscape:flex-row sm:flex-row gap-4 md:gap-10 items-center justify-center w-full">
+          <!-- Cột Trái: Tiêu đề, Slogan, Ô nhập tên & Nút Vào Game -->
+          <div class="flex-1 w-full flex flex-col gap-3 sm:gap-4 justify-center text-center landscape:text-left sm:text-left md:text-left">
+            <div>
+              <h1 class="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-white mb-1 drop-shadow-lg">
+                TANK <span class="text-pink-400">AZ</span> <span class="text-emerald-400">ONLINE</span>
+              </h1>
+              <p class="text-slate-300 text-xs sm:text-sm font-medium">
+                Giải Trí Sau Những Giờ Làm Việc Căng Thẳng
+              </p>
+            </div>
+
+            <div class="relative">
+              <input
+                id="input-username"
+                name="username"
+                type="text"
+                placeholder="Nhập tên của bạn..."
+                maxlength="16"
+                autocomplete="off"
+                class="w-full bg-slate-950 border border-slate-700 focus:border-pink-400 focus:ring-2 focus:ring-pink-400/20 rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 text-white font-bold text-xs sm:text-sm outline-none transition"
+              />
+              <p id="login-error-msg" class="text-rose-400 text-xs font-bold mt-1.5 hidden flex items-center gap-1">
+                ⚠️ <span id="login-error-text">Vui lòng nhập tên người chơi!</span>
+              </p>
+            </div>
+
+            <button type="submit" id="btn-login" class="btn-az btn-az-pink w-full py-2.5 sm:py-3 text-sm sm:text-base shadow-lg font-black tracking-wide active:scale-95">
+              🚀 VÀO GAME
+            </button>
+          </div>
+
+          <!-- Cột Phải: Danh mục chọn Skin Xe Tăng thích ứng thông minh -->
+          <div class="flex-1 w-full flex flex-col gap-2 sm:gap-2.5 justify-center">
+            <label class="block text-[10px] sm:text-xs font-bold text-emerald-300 uppercase tracking-wider">SKIN XE TĂNG:</label>
+            <div id="container-sticker-select" class="grid grid-cols-2 landscape:grid-cols-4 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 w-full">
+              <button type="button" data-sticker="🐥" class="sticker-opt active flex flex-col items-center justify-center p-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 transition">
+                <span class="text-lg sm:text-xl">🐥</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-300 mt-1 text-center break-words">Vịt Vàng</span>
+              </button>
+              <button type="button" data-sticker="🐱" class="sticker-opt flex flex-col items-center justify-center p-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 transition">
+                <span class="text-lg sm:text-xl">🐱</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-300 mt-1 text-center break-words">Mèo Nhỏ</span>
+              </button>
+              <button type="button" data-sticker="❤️" class="sticker-opt flex flex-col items-center justify-center p-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 transition">
+                <span class="text-lg sm:text-xl">❤️</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-300 mt-1 text-center break-words">Trái Tim</span>
+              </button>
+              <button type="button" data-sticker="⭐" class="sticker-opt flex flex-col items-center justify-center p-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 transition">
+                <span class="text-lg sm:text-xl">⭐</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-300 mt-1 text-center break-words">Ngôi Sao</span>
+              </button>
+              <button type="button" data-sticker="🌱" class="sticker-opt flex flex-col items-center justify-center p-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 transition">
+                <span class="text-lg sm:text-xl">🌱</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-300 mt-1 text-center break-words">Mầm Cây</span>
+              </button>
+              <button type="button" data-sticker="🌸" class="sticker-opt flex flex-col items-center justify-center p-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 transition">
+                <span class="text-lg sm:text-xl">🌸</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-300 mt-1 text-center break-words">Hoa Đào</span>
+              </button>
+              <button type="button" data-sticker="🐰" class="sticker-opt flex flex-col items-center justify-center p-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 transition">
+                <span class="text-lg sm:text-xl">🐰</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-300 mt-1 text-center break-words">Thỏ Trắng</span>
+              </button>
+              <button type="button" data-sticker="🤖" class="sticker-opt flex flex-col items-center justify-center p-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 transition">
+                <span class="text-lg sm:text-xl">🤖</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-300 mt-1 text-center break-words">Robot</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 2. MAIN MENU SCREEN (Lobby - Hidden initially until loginSuccess) -->
+    <div id="screen-menu" class="h-[100dvh] flex-1 flex flex-col items-center justify-center p-3 sm:p-4 landscape:p-2 bg-pastel-mesh relative hidden overflow-y-auto">
+      <!-- Title Header -->
+      <div class="text-center mb-3 sm:mb-4 landscape:mb-1.5 relative z-10">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl landscape:text-2xl font-black tracking-tight text-white mb-0.5 sm:mb-1 drop-shadow-md">
+          TANK <span class="text-pink-400">AZ</span> <span class="text-emerald-400">ONLINE</span>
+        </h1>
+      </div>
+
+      <!-- Logged-in Player Info Card -->
+      <div id="user-profile-box" class="w-full max-w-sm sm:max-w-md bg-slate-900/90 border border-slate-700 p-2.5 sm:p-3.5 landscape:p-2 rounded-xl sm:rounded-2xl shadow-xl mb-3 sm:mb-4 landscape:mb-2 backdrop-blur-md flex items-center justify-between">
+        <div class="flex items-center gap-2.5 sm:gap-3 landscape:gap-2">
+          <div id="display-user-sticker" class="w-9 h-9 sm:w-11 sm:h-11 landscape:w-8 landscape:h-8 rounded-xl sm:rounded-2xl bg-pink-500/20 border border-pink-400 flex items-center justify-center text-xl sm:text-2xl landscape:text-lg shadow-inner">
+            🐥
+          </div>
+          <div>
+            <div class="text-[10px] sm:text-[11px] landscape:text-[10px] text-slate-400 font-bold uppercase tracking-wider">Người Chơi Đang Đăng Nhập:</div>
+            <div id="display-user-name" class="text-base sm:text-lg landscape:text-sm font-black text-pink-300">---</div>
+          </div>
+        </div>
+        <button id="btn-change-name" type="button" class="text-xs text-pink-300 hover:text-white bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/40 px-2.5 sm:px-3.5 py-1.5 sm:py-2 landscape:py-1 landscape:px-2.5 rounded-lg sm:rounded-xl font-bold transition shadow-sm">
+          Đổi Tên
+        </button>
+      </div>
+
+      <!-- Main Menu Buttons Grid -->
+      <div class="lobby-container w-full max-w-sm sm:max-w-md flex flex-col gap-3 landscape:gap-1.5">
+        <button id="btn-create-room" class="btn-az btn-az-pink w-full py-2.5 sm:py-3 landscape:py-1.5 text-sm sm:text-base landscape:text-sm shadow-lg">
+          ➕ TẠO PHÒNG MỚI
+        </button>
+
+        <button id="btn-join-room" class="btn-az btn-az-emerald w-full py-2.5 sm:py-3 landscape:py-1.5 text-sm sm:text-base landscape:text-sm shadow-lg">
+          🌐 TÌM PHÒNG
+        </button>
+
+        <button id="btn-offline-mode" class="btn-az btn-az-secondary w-full py-2.5 sm:py-3 landscape:py-1.5 text-xs sm:text-sm landscape:text-xs">
+          🕹️ CHƠI OFFLINE (1 VS BOT)
+        </button>
+
+        <button id="btn-settings" class="btn-az btn-az-secondary w-full py-2 landscape:py-1 text-xs text-slate-300 font-bold">
+          ⚙️ CÀI ĐẶT & HƯỚNG DẪN
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. IN-GAME SCREEN -->
+    <div id="screen-game" class="flex-1 flex flex-col hidden bg-slate-950 relative">
+      <!-- Top HUD Header Bar -->
+      <div id="game-top-header" class="h-9 bg-black/80 border-b border-slate-800 px-3 flex items-center justify-between text-xs font-semibold z-20 shadow-md flex-nowrap w-full top-0 shrink-0">
+        <!-- Left: Ping -->
+        <div class="flex items-center justify-start flex-1 shrink-0 min-w-0">
+          <span id="hud-ping" class="text-emerald-400 font-mono text-xs whitespace-nowrap px-2 py-0.5 bg-slate-900/60 border border-slate-800 rounded-lg shadow-sm">
+            📶 15ms
+          </span>
+        </div>
+
+        <!-- Center: Series Score & Match Timer -->
+        <div class="flex items-center justify-center gap-2 shrink-0">
+          <span id="hud-series-score" class="text-emerald-300 font-black border border-emerald-500/40 bg-emerald-950/40 px-2.5 py-0.5 rounded-lg text-xs shadow-sm whitespace-nowrap">
+            🔴 0 - 0 🔵 (Chạm 1)
+          </span>
+          <span id="hud-match-timer" class="text-amber-300 font-black border border-amber-500/40 bg-amber-950/40 px-2.5 py-0.5 rounded-lg text-xs shadow-sm whitespace-nowrap">
+            ⏱️ 03:00
+          </span>
+        </div>
+
+        <!-- Right: Fullscreen & Leave (Only 2 buttons) -->
+        <div class="flex items-center justify-end gap-1.5 flex-1 shrink-0">
+          <button id="btn-fullscreen-toggle" type="button" class="bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 border border-indigo-400/50 w-7 h-7 rounded-lg text-sm font-bold transition flex items-center justify-center shadow-sm shrink-0 active:scale-95" title="Toàn màn hình">
+            <span>⛶</span>
+          </button>
+          <button id="btn-leave-game" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 w-7 h-7 rounded-lg text-sm font-bold transition shrink-0 flex items-center justify-center active:scale-95" title="Thoát phòng">
+            <span>🚪</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Game Canvas Container -->
+      <div id="game-container" class="flex-1 relative flex items-center justify-center p-1 md:p-2 overflow-hidden">
+        <canvas id="game-canvas" width="900" height="700"></canvas>
+
+        <!-- Waiting Room Start Match Overlay Banner for Host / Waiting text for players -->
+        <div id="hud-waiting-banner" class="hidden flex flex-col items-center gap-1.5 md:gap-2 text-center w-[92vw] max-w-xs md:max-w-sm p-2 sm:p-2.5 md:p-3">
+          <div class="banner-header text-center">
+            <h3 id="waiting-banner-header-title" class="text-xs md:text-sm font-black text-pink-300 uppercase tracking-wider flex items-center justify-center gap-1">
+              🏠 PHÒNG CHỜ <span id="waiting-banner-count" class="text-slate-200 font-bold">(1/4)</span>
+            </h3>
+          </div>
+
+          <!-- Nút quản lý Bot Death Match (Chỉ hiện với Host khi ở chế độ Death Match) -->
+          <div id="host-bot-dm-controls" class="host-bot-controls flex gap-1.5 w-full my-0.5 justify-center hidden">
+            <button id="btn-add-bot-dm" data-bot-add="deathmatch" type="button" class="bg-slate-800 hover:bg-emerald-800 text-emerald-200 text-[10px] md:text-xs py-1 px-2 rounded-lg border border-emerald-500/40 flex-1 font-bold transition hover:scale-105 active:scale-95 cursor-pointer" title="Thêm Bot AI">🤖 +Bot AI</button>
+            <button id="btn-remove-bot-dm" data-bot-remove="deathmatch" type="button" class="bg-slate-800 hover:bg-rose-900 text-rose-300 text-[10px] md:text-xs py-1 px-2 rounded-lg border border-slate-600 flex-1 font-bold transition hover:scale-105 active:scale-95 cursor-pointer" title="Xóa Bot AI">❌ -Bot AI</button>
+          </div>
+
+          <!-- KHU VỰC CHỌN ĐỘI & BOT CHIA 2 CỘT (Nút chọn đội ở trên, 2 nút bot ở hàng dưới) -->
+          <div id="waiting-team-select" class="team-selection-grid grid grid-cols-2 gap-1.5 w-full my-0.5 hidden">
+            <!-- CỘT ĐỘI ĐỎ -->
+            <div class="team-box flex flex-col gap-1 p-1.5 rounded-xl bg-rose-950/60 border border-rose-500/40 items-center">
+              <button id="btn-select-team-red" type="button" class="btn-team-select bg-rose-600 hover:bg-rose-500 text-white font-extrabold py-1 px-2 rounded-lg w-full text-[10px] md:text-xs shadow-md transition hover:scale-105 active:scale-95 cursor-pointer">
+                🔴 ĐỘI ĐỎ
+              </button>
+              <!-- Nút quản lý Bot (Chỉ hiện với Host) -->
+              <div id="host-bot-red-controls" class="host-bot-controls flex gap-1 w-full hidden">
+                <button id="btn-add-bot-red" data-bot-add="red" type="button" class="bg-slate-800 hover:bg-rose-800 text-rose-200 text-[9px] md:text-[10px] py-0.5 px-1 rounded-md border border-rose-500/40 flex-1 font-bold transition hover:scale-105 active:scale-95 cursor-pointer" title="Thêm Bot Đỏ">🤖 +Bot</button>
+                <button id="btn-remove-bot-red" data-bot-remove="red" type="button" class="bg-slate-800 hover:bg-rose-900 text-rose-300 text-[9px] md:text-[10px] py-0.5 px-1 rounded-md border border-slate-600 flex-1 font-bold transition hover:scale-105 active:scale-95 cursor-pointer" title="Xóa Bot Đỏ">❌ -Bot</button>
+              </div>
+            </div>
+
+            <!-- CỘT ĐỘI XANH -->
+            <div class="team-box flex flex-col gap-1 p-1.5 rounded-xl bg-blue-950/60 border border-blue-500/40 items-center">
+              <button id="btn-select-team-blue" type="button" class="btn-team-select bg-blue-600 hover:bg-blue-500 text-white font-extrabold py-1 px-2 rounded-lg w-full text-[10px] md:text-xs shadow-md transition hover:scale-105 active:scale-95 cursor-pointer">
+                🔵 ĐỘI XANH
+              </button>
+              <!-- Nút quản lý Bot (Chỉ hiện với Host) -->
+              <div id="host-bot-blue-controls" class="host-bot-controls flex gap-1 w-full hidden">
+                <button id="btn-add-bot-blue" data-bot-add="blue" type="button" class="bg-slate-800 hover:bg-blue-800 text-blue-200 text-[9px] md:text-[10px] py-0.5 px-1 rounded-md border border-blue-500/40 flex-1 font-bold transition hover:scale-105 active:scale-95 cursor-pointer" title="Thêm Bot Xanh">🤖 +Bot</button>
+                <button id="btn-remove-bot-blue" data-bot-remove="blue" type="button" class="bg-slate-800 hover:bg-blue-900 text-blue-300 text-[9px] md:text-[10px] py-0.5 px-1 rounded-md border border-slate-600 flex-1 font-bold transition hover:scale-105 active:scale-95 cursor-pointer" title="Xóa Bot Xanh">❌ -Bot</button>
+              </div>
+            </div>
+          </div>
+
+          <button id="btn-start-match" type="button" class="btn-az btn-az-pink w-full py-1.5 md:py-2 text-xs md:text-sm font-black tracking-wide rounded-xl shadow-lg shadow-pink-500/25 hover:scale-105 active:scale-95 transition cursor-pointer hidden">
+            🎮 BẮT ĐẦU TRẬN ĐẤU
+          </button>
+          <div id="waiting-nonhost-msg" class="text-[10px] md:text-xs text-amber-300 font-bold animate-pulse hidden">
+            ⏳ Đang chờ chủ phòng bấm bắt đầu trận đấu...
+          </div>
+        </div>
+
+        <!-- Floating Scoreboard HUD overlay -->
+        <div id="hud-scoreboard" class="fixed top-12 md:top-[60px] right-2 md:right-4 bg-slate-900/95 border border-slate-700/80 p-2 md:p-3.5 rounded-xl md:rounded-2xl w-44 sm:w-60 md:w-80 shadow-2xl pointer-events-auto z-[9999] opacity-100 backdrop-blur-md">
+          <div id="scoreboard-header" class="font-bold text-pink-300 border-b border-slate-700/80 pb-1 md:pb-1.5 mb-1 md:mb-2 flex items-center justify-between text-[10px] md:text-xs select-none cursor-pointer">
+            <span id="scoreboard-title" class="text-white flex items-center gap-1 font-black text-[10px] md:text-xs drop-shadow-sm">🏆 BẢNG XẾP HẠNG</span>
+            <button id="btn-toggle-scoreboard" type="button" class="text-[9px] md:text-[10px] font-bold text-pink-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-1.5 md:px-2 py-0.5 rounded-md md:rounded-lg border border-pink-500/50 transition cursor-pointer shrink-0 active:scale-95">Thu 🔼</button>
+          </div>
+          <div id="scoreboard-players-list"></div>
+        </div>
+
+        <!-- In-Game Chat Box Overlay -->
+        <div id="game-chat-box" class="fixed top-12 sm:top-14 md:top-auto md:bottom-4 left-2 sm:left-3 md:left-4 right-auto bg-slate-900/95 border border-slate-700 p-2 md:p-3 rounded-xl md:rounded-2xl w-56 sm:w-64 md:w-80 max-w-[48vw] md:max-w-none shadow-2xl z-[100] flex flex-col gap-1.5 md:gap-2 pointer-events-auto backdrop-blur-md">
+          <div id="game-chat-header" class="flex items-center justify-between border-b border-slate-800 pb-1 md:pb-1.5 select-none">
+            <span class="text-[10px] md:text-[11px] font-black text-pink-400 flex items-center gap-1 md:gap-1.5 pointer-events-none">
+              <span class="text-[10px] md:text-xs">💬</span> TRÒ CHUYỆN
+            </span>
+            <button id="btn-toggle-game-chat" type="button" class="text-[9px] md:text-[10px] text-slate-300 hover:text-white font-bold bg-slate-800 border border-slate-700 px-1.5 md:px-2 py-0.5 rounded-md md:rounded-lg transition">Thu 💬</button>
+          </div>
+          <div id="game-chat-log-container" class="space-y-1.5 md:space-y-2">
+            <div id="game-chat-log" class="scrollable-area h-16 md:h-24 overflow-y-auto space-y-0.5 md:space-y-1 text-[10px] md:text-xs font-medium pr-1 text-slate-200 bg-slate-950/70 p-1.5 md:p-2 rounded-lg md:rounded-xl border border-slate-800/80">
+              <div class="text-slate-500 italic text-[9px] md:text-[10px]">Gửi tin nhắn hoặc thả cảm xúc!</div>
+            </div>
+            <!-- In-Game Quick Emote Bar -->
+            <div id="game-emote-bar" class="flex items-center justify-between gap-0.5 md:gap-1 py-0.5 w-full">
+              <button type="button" data-emote="👍" class="btn-game-emote flex-1 text-center text-xs md:text-sm p-0.5 md:p-1 bg-slate-800 hover:bg-slate-700 rounded md:rounded-lg transition active:scale-95">👍</button>
+              <button type="button" data-emote="👎" class="btn-game-emote flex-1 text-center text-xs md:text-sm p-0.5 md:p-1 bg-slate-800 hover:bg-slate-700 rounded md:rounded-lg transition active:scale-95">👎</button>
+              <button type="button" data-emote="😂" class="btn-game-emote flex-1 text-center text-xs md:text-sm p-0.5 md:p-1 bg-slate-800 hover:bg-slate-700 rounded md:rounded-lg transition active:scale-95">😂</button>
+              <button type="button" data-emote="😍" class="btn-game-emote flex-1 text-center text-xs md:text-sm p-0.5 md:p-1 bg-slate-800 hover:bg-slate-700 rounded md:rounded-lg transition active:scale-95">😍</button>
+              <button type="button" data-emote="🎉" class="btn-game-emote flex-1 text-center text-xs md:text-sm p-0.5 md:p-1 bg-slate-800 hover:bg-slate-700 rounded md:rounded-lg transition active:scale-95">🎉</button>
+              <button type="button" data-emote="💣" class="btn-game-emote flex-1 text-center text-xs md:text-sm p-0.5 md:p-1 bg-slate-800 hover:bg-slate-700 rounded md:rounded-lg transition active:scale-95">💣</button>
+              <button type="button" data-emote="💩" class="btn-game-emote flex-1 text-center text-xs md:text-sm p-0.5 md:p-1 bg-slate-800 hover:bg-slate-700 rounded md:rounded-lg transition active:scale-95">💩</button>
+            </div>
+            <form id="form-game-chat" class="flex items-center gap-1 md:gap-1.5 w-full">
+              <input id="input-game-chat" type="text" placeholder="Nhập tin nhắn (Enter)..." maxlength="50" class="flex-1 min-w-0 bg-slate-950 border border-slate-700 rounded-lg md:rounded-xl px-2 md:px-2.5 py-1 md:py-1 text-[10px] md:text-xs text-white outline-none focus:border-pink-400 font-medium" />
+              <button type="submit" class="shrink-0 bg-pink-500 hover:bg-pink-400 text-slate-950 font-black text-[10px] md:text-xs px-2.5 md:px-3 py-1 md:py-1 rounded-lg md:rounded-xl transition active:scale-95">Gửi</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: CREATE ROOM -->
+    <div id="modal-create-room" class="modal-overlay hidden">
+      <div class="bg-slate-900 border border-slate-700 p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl w-full max-w-lg shadow-2xl max-h-[96vh] overflow-y-auto">
+        <form id="form-create-room" class="space-y-2.5 sm:space-y-3">
+          <!-- Header: Gộp nút bấm lên trên cùng -->
+          <div class="flex justify-between items-center w-full pb-2 border-b border-slate-800">
+            <button type="submit" class="btn-az btn-az-pink px-4 py-1.5 text-xs sm:text-sm font-black flex items-center gap-1.5 shadow-md active:scale-95">
+              🚀 TẠO PHÒNG
+            </button>
+            <button type="button" class="btn-close-modal text-slate-400 hover:text-white px-2.5 py-1 text-xs sm:text-sm font-bold rounded-lg hover:bg-slate-800 transition">
+              ✕ Hủy
+            </button>
+          </div>
+
+          <!-- Tên phòng & Mật khẩu -->
+          <div class="grid grid-cols-1 landscape:grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-3">
+            <div>
+              <label class="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase mb-1">Tên Phòng (Bắt buộc):</label>
+              <input id="input-room-name" type="text" value="" placeholder="Nhập tên phòng..." class="w-full h-9 bg-slate-950 border border-slate-700 rounded-xl px-3 py-1 text-sm font-bold text-white outline-none focus:border-pink-400" required />
+            </div>
+
+            <div>
+              <label class="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase mb-1">Mật Khẩu Phòng (Tùy chọn):</label>
+              <input id="input-room-password" type="password" placeholder="Mật khẩu (nếu có)..." class="w-full h-9 bg-slate-950 border border-slate-700 rounded-xl px-3 py-1 text-sm font-bold text-white outline-none focus:border-pink-400" />
+            </div>
+          </div>
+
+          <!-- Grid 2 cột: Cột Trái Cố Định = Thời Gian Ván Đấu, Cột Phải Linh Hoạt = Chế Độ Chơi & Thể Thức Thắng -->
+          <div class="grid grid-cols-1 landscape:grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-3">
+            <!-- Cột TRÁI: Cố định Thời gian ván đấu -->
+            <div>
+              <label class="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase mb-1">Thời Gian Ván Đấu:</label>
+              <select id="select-match-duration" class="w-full h-9 bg-slate-950 border border-slate-700 rounded-xl px-3 py-1 text-sm font-bold text-white outline-none focus:border-pink-400">
+                <option value="1" selected>1 Phút</option>
+                <option value="2">2 Phút</option>
+                <option value="3">3 Phút</option>
+                <option value="5">5 Phút</option>
+                <option value="10">10 Phút</option>
+              </select>
+            </div>
+
+            <!-- Cột PHẢI: Chế độ chơi & Thể thức thắng -->
+            <div class="flex flex-col gap-2">
+              <div>
+                <label class="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase mb-1">Chế Độ Chơi:</label>
+                <select id="select-game-mode" class="w-full h-9 bg-slate-950 border border-slate-700 rounded-xl px-3 py-1 text-sm font-bold text-white outline-none focus:border-pink-400">
+                  <option value="deathmatch" selected>Death Match (Tính Điểm)</option>
+                  <option value="teambattle">Team Battle (Đỏ vs Xanh)</option>
+                </select>
+              </div>
+
+              <div id="container-bo-mode" class="hidden">
+                <label class="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase mb-1">Thể Thức Thắng:</label>
+                <select id="select-bo-mode" class="w-full h-9 bg-slate-950 border border-slate-700 rounded-xl px-3 py-1 text-sm font-bold text-pink-300 outline-none focus:border-pink-400">
+                  <option value="BO1" selected>Chạm 1</option>
+                  <option value="BO3">Chạm 3</option>
+                  <option value="BO5">Chạm 5</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL: JOIN ROOM PASSWORD PROMPT -->
+    <div id="modal-room-password" class="modal-overlay hidden">
+      <div class="bg-slate-900 border border-slate-700 p-6 rounded-3xl w-full max-w-sm shadow-2xl">
+        <h2 class="text-lg font-black text-pink-400 mb-2">🔒 Nhập Mật Khẩu Phòng</h2>
+        <p id="password-prompt-room-name" class="text-xs text-slate-300 font-bold mb-4">Phòng yêu cầu mật khẩu để truy cập.</p>
+        <form id="form-join-password" class="space-y-4">
+          <input id="input-join-password" type="password" placeholder="Nhập mật khẩu phòng..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm font-bold text-white outline-none focus:border-pink-400" required />
+          <div class="flex justify-end gap-2">
+            <button type="button" class="btn-close-modal px-4 py-2 rounded-xl text-slate-400 hover:bg-slate-800 text-sm font-bold">Hủy</button>
+            <button type="submit" class="btn-az btn-az-pink px-5 py-2 text-sm font-bold">VÀO PHÒNG</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL: JOIN ROOM -->
+    <div id="modal-join-room" class="modal-overlay hidden">
+      <div class="bg-slate-900 border border-slate-700 p-6 rounded-3xl w-full max-w-lg shadow-2xl">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-black text-emerald-400">Danh Sách Phòng Online / LAN</h2>
+          <button type="button" class="btn-close-modal text-slate-400 hover:text-white font-bold text-lg">✕</button>
+        </div>
+
+        <div id="room-list-container" class="space-y-2 max-h-72 overflow-y-auto mb-4 p-1">
+          <!-- Room items dynamic insert -->
+        </div>
+
+        <div class="flex justify-end">
+          <button type="button" class="btn-close-modal px-5 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-bold">Đóng</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: SETTINGS -->
+    <div id="modal-settings" class="modal-overlay hidden">
+      <div class="bg-slate-900 border border-slate-700 p-4 sm:p-5 rounded-2xl sm:rounded-3xl w-full max-w-md shadow-2xl max-h-[95vh] overflow-y-auto">
+        <h2 class="text-base sm:text-lg font-black text-pink-400 mb-2 sm:mb-3">Cài Đặt & Hướng Dẫn</h2>
+
+        <div class="space-y-2 sm:space-y-2.5 text-xs">
+          <!-- 1. Settings Grid: Bot AI (Left) & Touch UI (Right) -->
+          <div class="grid grid-cols-2 gap-2 sm:gap-3">
+            <div class="bg-slate-950 p-2 sm:p-2.5 rounded-xl border border-slate-800 flex flex-col justify-between">
+              <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">🤖 ĐỘ KHÓ BOT:</label>
+              <select id="select-setting-bot-difficulty" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs font-bold text-white outline-none focus:border-pink-400">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="smart" selected>Smart AI</option>
+              </select>
+            </div>
+
+            <!-- TOGGLE: TOUCH CONTROLS (VIRTUAL JOYSTICK & FIRE BUTTON) -->
+            <div class="bg-slate-950 p-2 sm:p-2.5 rounded-xl border border-slate-800 flex items-center justify-between gap-2">
+              <div class="font-bold text-[11px] text-pink-300 leading-tight">📱 ĐIỀU KHIỂN ẢO (TOUCH)</div>
+              <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                <input id="toggle-touch-controls" type="checkbox" class="sr-only peer" checked />
+                <div class="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-pink-500"></div>
+              </label>
+            </div>
+          </div>
+
+          <!-- 2. Controls Guide: Compact 3 bullet points -->
+          <div class="bg-slate-950 p-2 sm:p-2.5 rounded-xl border border-slate-800 space-y-1 text-slate-300">
+            <div class="text-[11px] font-bold text-pink-400 uppercase flex items-center gap-1">
+              <span>🎮</span> Hướng Dẫn Điều Khiển:
+            </div>
+            <div class="space-y-0.5 text-[11px] pl-1">
+              <div>&bull; <span class="text-pink-300 font-bold">💻 PC:</span> <span class="text-white font-mono font-bold">WASD/Mũi tên</span> di chuyển, <span class="text-white font-mono font-bold">Space/Chuột</span> để bắn.</div>
+              <div>&bull; <span class="text-pink-300 font-bold">📱 Mobile:</span> Dùng <span class="text-white font-bold">Joystick</span> và <span class="text-white font-bold">Nút Bắn</span>.</div>
+              <div>&bull; <span class="text-pink-300 font-bold">🎮 Gamepad:</span> <span class="text-white font-bold">Analog</span> di chuyển, <span class="text-white font-bold">R2/A</span> để bắn.</div>
+            </div>
+          </div>
+
+          <!-- 3. Bottom Button Row: Fullscreen & Close button merged -->
+          <div class="flex items-center gap-2 pt-1">
+            <button id="btn-fullscreen" class="flex-1 btn-az btn-az-secondary text-xs py-2">
+              🖥️ TOÀN MÀN HÌNH
+            </button>
+            <button type="button" class="btn-close-modal flex-1 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs font-bold text-white transition active:scale-95">
+              ĐÓNG
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: MVP MATCH END CELEBRATION (LANDSCAPE COMPACT FRIENDLY) -->
+    <div id="modal-mvp" class="modal-overlay hidden">
+      <div class="bg-slate-900/95 border border-amber-400/60 p-3 sm:p-4 rounded-2xl sm:rounded-3xl w-full max-w-sm text-center shadow-2xl relative overflow-hidden max-h-[85vh] overflow-y-auto">
+        <div id="mvp-content-container" class="mb-2">
+          <!-- Single MVP Winner Card or Team Win Banner -->
+        </div>
+        <p class="text-[10px] sm:text-xs text-slate-300 font-bold animate-pulse">
+          ⏳ Tự động chuyển về PHÒNG CHỜ sau 6 giây
+        </p>
+      </div>
+    </div>
+
+    <!-- MOBILE VIRTUAL TOUCH CONTROLS OVERLAY -->
+    <div id="mobile-touch-controls" class="fixed inset-0 pointer-events-none z-[9990] hidden">
+      <!-- Joystick Base (Bottom Left) -->
+      <div id="mobile-joystick-container" class="pointer-events-auto absolute bottom-6 left-6 w-32 h-32 touch-none select-none">
+        <div id="mobile-joystick-base" class="w-full h-full rounded-full bg-slate-900/80 border-2 border-pink-400/60 relative flex items-center justify-center shadow-2xl backdrop-blur-sm">
+          <div id="mobile-joystick-knob" class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 border-2 border-white absolute top-10 left-10 shadow-lg pointer-events-none transition-transform duration-75"></div>
+        </div>
+      </div>
+
+      <!-- Big Fire Button 🔥 (Bottom Right) -->
+      <button id="btn-mobile-fire" type="button" class="pointer-events-auto absolute bottom-6 right-6 w-20 h-20 rounded-full bg-gradient-to-br from-rose-500 to-rose-700 border-4 border-rose-200 text-white font-black text-sm flex flex-col items-center justify-center shadow-2xl touch-none select-none cursor-pointer active:scale-90 transition-transform">
+        <span class="text-2xl">🔥</span>
+        <span class="text-[10px] uppercase font-black tracking-tighter">BẮN</span>
+      </button>
+    </div>
+
+    <!-- MOBILE LANDSCAPE WARNING OVERLAY -->
+    <div id="overlay-landscape-warning" class="fixed inset-0 bg-slate-950/95 z-[999999] flex flex-col items-center justify-center p-6 text-center backdrop-blur-md hidden touch-none select-none">
+      <div class="animate-bounce text-6xl mb-4">📱🔄</div>
+      <h2 class="text-xl md:text-2xl font-black text-pink-400 mb-2">CHÚ Ý XOAY MÀN HÌNH</h2>
+      <p class="text-sm md:text-base text-slate-200 font-bold max-w-sm mb-5">
+        📱 Vui lòng xoay ngang màn hình để chơi game tốt nhất!
+      </p>
+      <button id="btn-landscape-fullscreen" type="button" class="bg-gradient-to-r from-pink-500 to-rose-600 text-white font-extrabold px-5 py-3 rounded-2xl text-sm shadow-xl flex items-center gap-2 active:scale-95 transition cursor-pointer">
+        🖥️ MỞ TOÀN MÀN HÌNH NGAY
+      </button>
+    </div>
+
+    <!-- Script Entry -->
+    <script type="module" src="/client/game.ts"></script>
+  </body>
+</html>

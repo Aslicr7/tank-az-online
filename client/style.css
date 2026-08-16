@@ -1,0 +1,490 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .bg-pastel-mesh {
+    background: radial-gradient(circle at 50% 30%, #1e1b2e 0%, #0f172a 100%);
+  }
+
+  .glow-pink {
+    box-shadow: 0 0 20px rgba(244, 114, 182, 0.4);
+  }
+
+  .glow-emerald {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
+  }
+
+  .glow-yellow {
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
+  }
+
+  .input-error-shake {
+    animation: inputShake 0.4s ease-in-out;
+    border-color: #f43f5e !important;
+    box-shadow: 0 0 12px rgba(244, 63, 94, 0.4) !important;
+  }
+}
+
+@keyframes inputShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* Base Body Setup & Layout */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #0f172a;
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Khung Sảnh Chờ Căn Giữa Chuẩn */
+#screen-lobby:not(.hidden), #screen-menu:not(.hidden), #screen-login:not(.hidden) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.hidden, [hidden] {
+  display: none !important;
+}
+
+/* Canvas & Game Container */
+#game-container, #game-canvas {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  object-fit: contain;
+}
+
+.scrollable-area {
+  touch-action: pan-y !important;
+  overscroll-behavior: contain;
+}
+
+/* Container & Canvas Stage Centered with Strict Aspect-Ratio */
+.game-canvas-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 10px;
+}
+
+#canvas-stage-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 80px);
+  aspect-ratio: 900 / 700;
+  margin: auto;
+}
+
+/* Strict Aspect-Ratio Responsive Canvas */
+#game-canvas, #gameCanvas {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 80px);
+  aspect-ratio: 900 / 700;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+  background-color: #0f172a;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  border: 1px solid #334155;
+  cursor: crosshair;
+}
+
+/* High Z-Index Chat Box & Neon Glow Effect */
+#lobby-chat-box {
+  z-index: 9999 !important;
+  position: relative;
+}
+
+#game-chat-box, #chat-panel, .chat-window {
+  z-index: 9999 !important;
+}
+
+@media (min-width: 769px) {
+  #game-chat-box, #chat-panel, .chat-window {
+    position: fixed !important;
+    bottom: 16px !important;
+    left: 16px !important;
+    right: auto !important;
+    top: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #game-chat-box, #chat-panel, .chat-window {
+    position: fixed !important;
+    top: 52px !important;
+    bottom: auto !important;
+    left: 8px !important;
+    right: auto !important;
+  }
+}
+
+#input-lobby-chat:focus, #input-game-chat:focus {
+  border-color: #f472b6 !important;
+  box-shadow: 0 0 15px rgba(244, 114, 182, 0.7), 0 0 6px rgba(244, 114, 182, 0.9) !important;
+}
+
+#lobby-chat-box:focus-within, #game-chat-box:focus-within {
+  border-color: #ec4899 !important;
+  box-shadow: 0 0 22px rgba(236, 72, 153, 0.5), 0 12px 30px rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Waiting Banner in Game */
+#hud-waiting-banner {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  z-index: 500 !important;
+  background: rgba(15, 23, 42, 0.95) !important;
+  border: 1.5px solid rgba(244, 114, 182, 0.6) !important;
+  border-radius: 0.875rem !important;
+  padding: 0.75rem 1rem !important;
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.25) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Scoreboard / Team Members HUD */
+#hud-scoreboard {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  border-radius: 1rem !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#scoreboard-body-container, #scoreboard-players-list, #game-chat-log-container {
+  transition: opacity 0.25s ease-in-out, max-height 0.25s ease-in-out !important;
+}
+
+#scoreboard-body-container.hidden, #scoreboard-players-list.hidden, #game-chat-log-container.hidden, #hud-waiting-banner.hidden {
+  display: none !important;
+}
+
+/* Sticker Selector Options */
+.sticker-opt {
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sticker-opt:hover {
+  transform: translateY(-2px);
+  border-color: #f472b6;
+}
+
+.sticker-opt.active {
+  background: rgba(244, 114, 182, 0.15) !important;
+  border-color: #f472b6 !important;
+  box-shadow: 0 0 12px rgba(244, 114, 182, 0.4);
+}
+
+/* Modal Ẩn Mặc Định Tương Tác Chuẩn */
+.modal, .modal-overlay {
+  display: none !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 1000000 !important;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.modal.active, .modal.show, .modal-overlay.active, .modal-overlay.show, .modal-overlay:not(.hidden) {
+  display: flex !important;
+}
+
+.modal.hidden, .modal-overlay.hidden {
+  display: none !important;
+}
+
+.modal > div, .modal-overlay > div {
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+}
+
+/* Button Custom Styles */
+.btn-az {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.btn-az-pink {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  color: #ffffff;
+  border: 1px solid #f472b6;
+}
+
+.btn-az-pink:hover {
+  background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+  box-shadow: 0 0 20px rgba(244, 114, 182, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-az-emerald {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: 1px solid #34d399;
+}
+
+.btn-az-emerald:hover {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-az-secondary {
+  background-color: #1e293b;
+  color: #f1f5f9;
+  border: 1px solid #475569;
+}
+
+.btn-az-secondary:hover {
+  background-color: #334155;
+  border-color: #94a3b8;
+}
+
+/* Quick Emote Button */
+.btn-emote {
+  user-select: none;
+  cursor: pointer;
+}
+
+/* Micro Screen Shake Effect for 10s countdown */
+@keyframes screenShakeSubtle {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+.screen-shake-subtle {
+  animation: screenShakeSubtle 0.12s infinite ease-in-out;
+}
+
+/* Subtle Timer Pulse Animation */
+@keyframes timerPulseSoft {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.timer-pulse-subtle {
+  animation: timerPulseSoft 0.8s ease-in-out infinite;
+}
+
+/* Custom Dark UI Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090d16;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f472b6;
+  box-shadow: 0 0 10px rgba(244, 114, 182, 0.6);
+}
+
+/* Touch Manipulation & Mobile Gameplay */
+body, canvas, button, input, select, .touch-control, #mobile-joystick-base, #mobile-joystick-knob, #btn-mobile-fire {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+canvas {
+  touch-action: none;
+}
+
+#mobile-joystick-container, #btn-mobile-fire {
+  touch-action: none;
+}
+
+#btn-mobile-fire:active, #btn-mobile-fire.active {
+  transform: scale(0.92);
+  background: radial-gradient(circle, #fb7185 0%, #e11d48 100%);
+  box-shadow: 0 0 25px rgba(251, 113, 133, 0.9);
+}
+
+/* Mobile in-game chat box styling */
+body.is-mobile-device #game-chat-box {
+  top: 52px !important;
+  bottom: auto !important;
+  left: 8px !important;
+  width: 250px !important;
+  max-width: 48vw !important;
+}
+
+/* --- MOBILE HUD & RESPONSIVE IMPROVEMENTS --- */
+
+/* 1. Leaderboard & Members list top-right scaling on small screens / mobile */
+@media (max-width: 768px), (max-height: 500px) {
+  #hud-scoreboard {
+    transform: scale(0.8) !important;
+    transform-origin: top right !important;
+    right: 8px !important;
+    top: 52px !important;
+    padding: 8px 10px !important;
+    max-width: 240px !important;
+  }
+
+  #scoreboard-title {
+    font-size: 11px !important;
+  }
+
+  #scoreboard-players-list {
+    font-size: 10px !important;
+  }
+}
+
+/* 2. In-game Chat Box positioning & sizing on small screens / mobile (Top-Left under header, symmetric to scoreboard) */
+@media (max-width: 768px), (max-height: 500px) {
+  #game-chat-box {
+    width: 250px !important;
+    max-width: 48vw !important;
+    top: 52px !important;
+    bottom: auto !important;
+    left: 8px !important;
+    right: auto !important;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+    border-radius: 12px !important;
+    transform: scale(0.85) !important;
+    transform-origin: top left !important;
+  }
+
+  #game-chat-log {
+    height: 60px !important;
+    font-size: 10px !important;
+    padding: 4px 6px !important;
+  }
+
+  .btn-game-emote {
+    font-size: 12px !important;
+    padding: 2px 1px !important;
+    min-width: 0 !important;
+  }
+
+  #form-game-chat {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 4px !important;
+  }
+
+  #input-game-chat {
+    font-size: 10px !important;
+    padding: 4px 6px !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  #form-game-chat button[type="submit"] {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* 3. Menus, Lobby Containers & Modals compact scaling on small screen / mobile landscape */
+@media (max-height: 500px), (max-width: 640px) {
+  .lobby-container,
+  #screen-menu .lobby-container,
+  #screen-login .lobby-container,
+  #screen-lobby .lobby-container {
+    transform: scale(0.85) !important;
+    transform-origin: center center !important;
+    max-width: 92vw !important;
+  }
+
+  .modal-overlay > div,
+  .modal > div {
+    transform: scale(0.85) !important;
+    transform-origin: center center !important;
+    max-height: 92vh !important;
+    padding: 12px 16px !important;
+    border-radius: 18px !important;
+  }
+
+  #screen-lobby, #screen-menu, #screen-login {
+    padding: 8px !important;
+  }
+}
+
+/* Modal Form Layout: Side-by-side inputs */
+.form-row-flex {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.form-group-half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.form-group-half input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 500px) {
+  .form-row-flex {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
